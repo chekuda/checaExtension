@@ -16,6 +16,10 @@ function stopAlloldEvents(event)
   event.preventDefault();
 }
 
+/********************
+  Dont act over the widget
+*******************/
+
 function checkifElementFromWidget(){
 
   var control = 0;
@@ -39,6 +43,10 @@ function moveRightWidget(){
   document.querySelector(".veCaptureWidget").style.left = "inherit";
 }
 
+/********************
+  Remove all the functionalities when widget closed
+*******************/
+
 function stopFunctionalities(){
   document.removeEventListener("click",getSelector);
   document.removeEventListener("mouseover",remarkTarget);
@@ -48,13 +56,34 @@ function stopFunctionalities(){
   document.querySelector(".veCaptureWidget").style.opacity = "0";
 }
 
+/********************
+  Bold the border
+*******************/
 
 function remarkTarget(event)
 {
+  var procced = checkifElementFromWidget();
+
+  if(procced == 1)
+    {
+      return false;
+    }
+
   event.target.style.border = "solid 2px #feff04";
 }
+/********************
+  UnRemark the border
+*******************/
+
 function unremarkTarget(event)
 {
+  var procced = checkifElementFromWidget();
+  
+  if(procced == 1)
+    {
+      return false;
+    }
+
   event.target.style.border = "none";
 }
 /********************
@@ -110,7 +139,7 @@ function getSelector(event){
      }
     }
 
-    document.querySelector(".mapping textarea").innerHTML = finalSelector;
+    document.querySelector(".dummySelector textarea").innerHTML = finalSelector;
     
 }
 /********************
@@ -130,18 +159,18 @@ function checkveTag(nScripts){
   Check veCapture
 *******************/
 
-function checkveCapture(nScripts){
-    for(var i=0;i<nScripts.length;i++){
+function checkveCapture(){
       if(document.getElementById("veConnect")){
           console.log("VECapture>>>>>> "+document.getElementById("veConnect").src);
           document.querySelector("#vecapture .iconOk").style.background = "url('chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/ok.png')";/*Loading the image from the extension URL*/
         }
-      }
 }
 
 
 
-
+/********************
+  Receive information from extension
+*******************/
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   if(message.secret == "veCaptureApp" && message.msg == "OpenWidget")

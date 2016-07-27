@@ -1,0 +1,117 @@
+.firstForm{
+	margin-top: 50px;
+	font-size: 20px;
+}
+.firstForm label{
+	display: inline-block;
+    width: 120px;
+}
+
+.incon{
+	display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+.iconClose{
+	cursor: pointer !important;
+	display: inline-block ;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 19px;
+    height: 18px;
+	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/close.png");/*Loading the image from the extension URL*/
+}
+.iconOk{
+	background: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/loading.gif");/*Loading the image from the extension URL*/
+}
+.leftMoveIcon{
+	position: absolute;
+	top: 10px;
+	left: 5px;
+	width: 20px;
+    height: 20px;
+	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/left.png");
+	cursor: pointer !important;
+}
+.rightMoveIcon{
+	position: absolute;
+	top: 10px;
+	width: 20px;
+    height: 20px;
+    left: 20px;
+	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/right.png");
+	cursor: pointer !important;
+}
+
+#selectForm{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: solid 1px #8b8888;
+}
+
+#selectForm label{
+	display: inline-block;
+}
+#selectForm .forms{
+	   
+	   padding-bottom: 10px;
+}
+#selectForm .mapping{
+	padding-bottom: 10px;
+}
+#selectForm textarea{
+	    vertical-align: middle;
+	    height: 32px;
+	    font-size: 14px;
+}
+
+#tagSelector{
+	border-bottom: solid 1px #8b8888;
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+.veCaptureWidget{
+      position: fixed;
+      width: 300px;
+      left: 0;
+      display : block ;
+      background-color : #cccccc ;
+      top :0;
+      opacity :0;
+      text-align: center;
+      transition: all 0.5s ease 0s;
+      z-index: 20000;
+}
+.veCaptureWidget *{
+	font-size: 17px;
+	color: #000000;
+	cursor: default;
+	border:0;
+	border-color: none;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+	border:none !important;
+}
+.veCaptureWidget .groupFrom{
+	padding: 10px;
+}
+
+.widgethideButton{
+  	background-color: #438f2f;
+	border: 0;
+	border-color: none;
+	border-radius: 0;
+	margin-top: 10px;
+	min-width: 8rem;
+	max-width: 9rem;
+	color: black;
+	padding: 5px;
+	transition: all 0.3s ease 0s;
+}
+.widgethideButton:hover{
+	background-color: #4ebc31;
+}

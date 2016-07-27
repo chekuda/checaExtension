@@ -1,0 +1,21 @@
+{
+  "name": "veCapture Extension",
+  "authors": [
+    "jose Exposito <jose.exposito@veinteractive.com"
+  ],
+  "description": "Extension for veCapture helper",
+  "main": "popup.html",
+  "license": "MIT",
+  "homepage": "popup.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^3.1.0"
+  }
+}

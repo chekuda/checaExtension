@@ -10,6 +10,86 @@
 //     chrome.runtime.sendMessage({secret:"veCaptureApp",msg:"test"});//use for send information to the extension
 // })
 
+
+var listNewFormMappings=[];
+
+function clearFields(data){
+
+
+    document.getElementById("mappingName").value = "";
+    document.getElementById("mappingSelector").value = "";
+    document.getElementById("mappingDataType").value ="";
+    document.getElementById("htmlType").value = "";
+    document.getElementById("htmlAttribute").value = "";
+    document.getElementById("fieldType").value = "";
+    document.getElementById("eventType").value = "";
+
+  if(data=="formSaved")
+  {
+    document.getElementById("formName").value = "";
+    document.getElementById("formType").value = "";
+  }
+
+}
+
+function removeItem(){
+  var nodeToRemove="";
+  console.log(event.target.parentNode.parentNode);
+  nodeToRemove =  event.target.parentNode.textContent;
+
+  for(var i=0;i<listNewFormMappings.length;i++)
+  {
+    if(listNewFormMappings[i].formName == nodeToRemove)
+    {
+      listNewFormMappings.splice(i,1);
+    }
+  }
+  event.target.parentNode.parentNode.remove();
+
+}
+
+function saveFormMapping(){
+
+  if(document.getElementById("mappingDataType").value != "" || document.getElementById("htmlType").value !="" || document.getElementById("htmlAttribute").value !="" || document.getElementById("fieldType").value !="" || document.getElementById("eventType").value !="")
+  {
+    var list=""; 
+    var newOne = {
+                mappingName: document.getElementById("mappingName").value,
+                mappingSelector: document.getElementById("mappingSelector").value,
+                mappingDataType: document.getElementById("mappingDataType").value,
+                htmlType: document.getElementById("htmlType").value,
+                htmlAttribute: document.getElementById("htmlAttribute").value,
+                fieldType: document.getElementById("fieldType").value,
+                eventType: document.getElementById("eventType").value
+              };
+
+    listNewFormMappings.push(newOne);
+
+    var newDiv = document.createElement("div");
+    newDiv.className="listNewFormMappings";   
+    var newSpan = document.createElement("span");
+    newSpan.className="newObjectMapping";
+    var removeSpan = document.createElement("span");
+    removeSpan.className="removeNewObject";       
+    var newName = document.createTextNode(newOne.mappingName); 
+    newSpan.appendChild(newName);
+    newSpan.appendChild(removeSpan);   
+    newDiv.appendChild(newSpan);
+                      
+
+    var list = document.querySelector("#formMappings .newMappingsList");    
+    list.insertBefore(newDiv, list.childNodes[0]);
+    list.childNodes[0].addEventListener("click",removeItem);
+
+    clearFields("mappingSaved");
+    
+
+  }
+  else{
+    alert("Dont Forget the types");
+  }
+
+}
 function stopAlloldEvents(event)
 {
   event.stopPropagation();
@@ -53,7 +133,7 @@ function stopFunctionalities(){
   document.removeEventListener("mouseout",remarkTarget);
   document.removeEventListener("click",stopAlloldEvents);
 
-  document.querySelector(".veCaptureWidget").style.opacity = "0";
+  document.querySelector(".veCaptureWidget").style.display = "none";
 }
 
 /********************
@@ -130,44 +210,81 @@ function getSelector(event){
     
     if(getDeep.length >1)
     {
-     for(var i=0;i<getDeep.length;i++)
-     {
-       if(getDeep[i].textContent == event.target.textContent)
-       {
-        finalSelector = finalSelector+":eq("+i+")";
-       }  
-     }
+      if(event.target.nodeName.toLowerCase() == "img")
+      {
+         for(var i=0;i<getDeep.length;i++)
+         {
+           if(getDeep[i].src == event.target.src)
+           {
+            if(!finalSelector.match(/eq/g))//No repeat eq for same pictures displayed
+            {
+              finalSelector = finalSelector+":eq("+i+")";
+            }
+           }  
+         }
+      }
+      else
+      {
+         for(var i=0;i<getDeep.length;i++)
+         {
+           if(getDeep[i].textContent == event.target.textContent)
+           {
+            if(!finalSelector.match(/eq/g))
+            {
+              finalSelector = finalSelector+":eq("+i+")";
+            }
+           }  
+         }
+      }
+    
     }
 
-    document.querySelector(".dummySelector textarea").innerHTML = finalSelector;
+    document.getElementById("mappingSelector").value = finalSelector;
     
 }
+
 /********************
   check the vetag
 *******************/
 
-function checkveTag(nScripts){
-   
-    for(var i=0;i<nScripts.length;i++){
-      if(nScripts[i].src.match(/interactive\.com\/tags/)){
+function checkveTag(){
+   var nScripts= document.getElementsByTagName("script");
+    for(var i=0;i<nScripts.length;i++)
+    {
+      if(nScripts[i].src.match(/interactive\.com\/tags/))
+      {
         console.log("VETAG>>>>>> "+nScripts[i].src);
         document.querySelector("#vetag .iconOk").style.background = "url('chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/ok.png')";/*Loading the image from the extension URL*/
-        }
+        document.removeEventListener("DOMNodeInserted",checkveTag);
       }
+    }
 }
 /********************
   Check veCapture
 *******************/
 
-function checkveCapture(){
-      if(document.getElementById("veConnect")){
+function checkveCapture()
+{
+
+      if(document.getElementById("veConnect"))
+      {
           console.log("VECapture>>>>>> "+document.getElementById("veConnect").src);
           document.querySelector("#vecapture .iconOk").style.background = "url('chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/ok.png')";/*Loading the image from the extension URL*/
-        }
+
+      }
+
 }
 
+function calculateHeightofFormSection(){
+  var topSection = document.getElementById("tagSelector").clientHeight;
+  var widgetHeight = document.getElementsByClassName("veCaptureWidget")[0].clientHeight
 
+  document.getElementById("editableWidget").style.height = widgetHeight - topSection + 2 +"px";
+}
 
+function getWholeURl(){
+  document.getElementById("wholeUrl").value = window.location.hostname + window.location.pathname;
+}
 /********************
   Receive information from extension
 *******************/
@@ -183,11 +300,16 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         success: function ( res ) 
         {
           $(res).appendTo("body");
-          document.querySelector(".veCaptureWidget").style.height = screen.height+"px";
-          setTimeout(function(){ document.querySelector(".veCaptureWidget").style.opacity = "0.8"; }, 50);
+          document.querySelector(".veCaptureWidget").style.height = window.innerHeight+"px";
+          setTimeout(function(){ document.querySelector(".veCaptureWidget").style.display = "block"; }, 50);
           document.querySelector(".iconClose").addEventListener("click",stopFunctionalities);
           document.querySelector("span.leftMoveIcon").addEventListener("click",moveLeftWidget);
           document.querySelector("span.rightMoveIcon").addEventListener("click",moveRightWidget);
+          document.querySelector("#saveMapping").addEventListener("click",saveFormMapping);
+          checkveTag();
+          checkveCapture();
+          calculateHeightofFormSection();
+          getWholeURl();
         }
       })
 
@@ -195,11 +317,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     else
     {
       //Everytime I open the widget check the tag
-      document.querySelector(".veCaptureWidget").style.opacity = "0.8";
+      document.querySelector(".veCaptureWidget").style.display = "block";
     }
-    checkveTag(document.getElementsByTagName("script"));
-
-    checkveCapture(document.getElementsByTagName("script"));
 
     document.addEventListener("click",stopAlloldEvents);
       // checkveGDM(nScripts);

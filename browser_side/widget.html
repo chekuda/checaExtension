@@ -3,23 +3,25 @@
   <span class="leftMoveIcon"></span>
   <span class="rightMoveIcon"></span>
   <div id="tagSelector">
-  	<form class="firstForm" id="vetag">
-	  <div class="groupFrom">
-	    <label for="vetag">VeTag</label>
+	  <div class="groupFrom" id="vetag">
+	    <span class="titleTag">VeTag</span>
 	    <span class="incon iconOk"></span>
 	  </div>
 	  <div class="groupFrom" id="vecapture">
-	    <label for="vecapture">VeCapture</label>
+	    <span class="titleTag">VeCapture</span>
 	   <span class="incon iconOk"></span>
 	  </div>
-	  <div class="groupFrom" id="GDMPixel">
-	    <label for="GDMPixel">GDMpixel</label>
+	  <!-- <div class="groupFrom" id="GDMPixel">
+	    <span>GDMpixel</span>
 	    <span class="incon iconOk"></span>
-	  </div>
-	</form>
+	  </div> -->
   </div>
-  <div id="selectForm">
-  	<div class="forms">
+  <div id="editableWidget">
+  <div class="selectForm">
+  	<div class="divtitle">
+  		<h3 class="sectorTitle">Form configuration</h3>
+  	</div>
+  	<!-- <div class="forms">
   		<label>Form</label>
 	  	<select>
 	  	  <option value="Home">Home</option>
@@ -28,26 +30,164 @@
 		  <option value="Product">Product</option>
 		  <option value="Complete">Complete</option>
 		</select>
+	</div> -->
+	<div class="forms">
+	  	<input class="textArea" placeholder="Form Name" id="formName"/>
 	</div>
-	<div class="formMappings">
-		<div class="mapping">
-			<label>Name</label>
-			<textarea class="formName"></textarea>
-		</div>
-		<div class="mapping">
-			<label>Selector</label>
-			<textarea class="selector"></textarea>
-		</div>
-		<div class="mapping">
-			<label>Selector</label>
-			<textarea class="selector"></textarea>
-		</div>
+	<div class="forms">
+		<select class="textArea" id="formType">
+			  <option value="">Form type</option>
+			  <option value="product_page">Product</option>
+		  	  <option value="normal_form">Normal</option>
+		  	  <option value="complete_Ok">Complete Ok</option>
+		  	  <option value="complete_Cancel">Complete Cancel</option>
+		</select>
 	</div>
-
+	<div class="forms tooltip" >
+	  	<input class="textArea" placeholder="URL" id="wholeUrl"/><span class="toolTipText">For multiple Urls, please split them by ","</span>
+	</div>
   </div>
-  <div class="dummySelector">
-  	<label>Dummy Selector</label>
-	<textarea></textarea>
+  <div class="selectForm">
+  	<div class="divtitle">
+  		<h3 class="sectorTitle">Mapping configuration</h3>
+  	</div>
+  	<div id="formMappings">
+  		<div class="newMappingsList">
+  		</div>
+		<div class="forms">
+			<input class="textArea" placeholder="Name" id="mappingName"/>
+		</div>
+		<div class="forms">
+			<input class="textArea" placeholder="Selector" id="mappingSelector"/>
+		</div>
+		<div class="forms">
+			<select class="textArea" id="mappingDataType">
+			  <option value="">Data type</option>
+		  	  <option value="Text">Text</option>
+		  	  <option value="Mail">Mail</option>
+		  	  <option value="Currency">Currency</option>
+		  	  <option value="Date">Date</option>
+		  	  <option value="Whole Number">Whole Number</option>
+		  	  <option value="Decimal Number">Decimal Number</option>
+		  	  <option value="Promo Code">Promo Code</option>
+		  	  <option value="Total Basket">Total Basket</option>
+		  	  <option value="Order Number">Order Number</option>
+		  	  <option value="Product Code">Product Code</option>
+		  	  <option value="Product Name">Product Name</option>
+		  	  <option value="Product Description">Product Description</option>
+		  	  <option value="Small Image Url">Small Image Url</option>
+		  	  <option value="Big Image Url">Big Image Url</option>
+		  	  <option value="Price">Price</option>
+		  	  <option value="currency">Price &amp; Currency</option>
+		  	  <option value="Item Type">Item Type</option>
+		  	  <option value="Product Category">Product Category</option>
+		  	  <option value="Product Category">Color</option>
+		  	  <option value="Size">Size</option>
+		  	  <option value="Dimensions">Dimensions</option>
+		  	  <option value="Height">Height</option>
+		  	  <option value="Width">Width</option>
+		  	  <option value="Depth">Depth</option>
+		  	  <option value="Location">Location</option>
+		  	  <option value="Stock">Stock</option>
+		  	  <option value="Unsubscriber">Unsubscriber</option>
+		  	  <option value="Opt Out">Opt Out</option>
+		  	  <option value="roduct Url">Product Url</option>
+		  	  <option value="ProActive">ProActive</option>
+		  	  <option value="Phone Number">Phone Number</option>
+		  	  <option value="CheckInDate">CheckInDate</option>
+		  	  <option value="CheckOutDate">CheckOutDate</option>
+		  	  <option value="DateOfBirth">DateOfBirth</option>
+		  	  <option value="Age">Age</option>
+		  	  <option value="Gender">Gender</option>
+		  	  <option value="MaritalStatus">MaritalStatus</option>
+		  	  <option value="Children">Children</option>
+		  	  <option value="NumberOfChildren">NumberOfChildren</option>
+		  	  <option value="Nationality">Nationality</option>
+		  	  <option value="Country">Country</option>
+		  	  <option value="City">City</option>
+		  	  <option value="First Name">First Name</option>
+		  	  <option value="Breadcrumb">Breadcrumb</option>
+		  	  <option value="Culture">Culture</option>
+			</select>
+		</div>
+		<div class="forms">
+			<select class="textArea" id="htmlType">
+				  <option value="">HTML Type</option>
+				  <option value="Text Box">Text Box</option>
+				  <option value="Radio Button">Radio Button</option>
+				  <option value="Check Box">Check Box</option>
+				  <option value="List Box">List Box</option>
+				  <option value="Hidden">Hidden</option>
+				  <option value="Div">Div</option>
+				  <option value="Span">Span</option>
+				  <option value="Img">Img</option>
+				  <option value="Paragraph">Paragraph</option>
+				  <option value="Href">Href</option>
+				  <option value="td">td</option>
+				  <option value="tr">tr</option>
+				  <option value="h1">h1</option>
+				  <option value="h2">h2</option>
+				  <option value="h3">h3</option>
+				  <option value="h4">h4</option>
+				  <option value="h5">h5</option>
+				  <option value="h6">h6</option>
+				  <option value="Li">Li</option>
+				  <option value="Text Area">Text Area</option>
+				  <option value="TH">TH</option>
+				  <option value="DL">DL</option>
+				  <option value="DT">DT</option>
+				  <option value="DD">DD</option>
+				  <option value="Label">Label</option>
+				  <option value="Font">Font</option>
+				  <option value="Em">Em</option>
+			</select>
+		</div>
+		<div class="forms">
+			<select class="textArea" id="htmlAttribute">
+				  <option value="">HTML Attribute</option>
+				  <option value="value">Value</option>
+				  <option value="class">Class</option>
+				  <option value="visibility">Visibility</option>
+				  <option value="id">id</option>
+				  <option value="src">src</option>
+				  <option value="href">href</option>
+				  <option value="html">hrml</option>
+			</select>
+		</div>
+		<div class="forms">
+			<select class="textArea" id="fieldType">
+				  <option value="">Field Type</option>
+				  <option value="id">id</option>
+				  <option value="class">Class</option>
+				  <option value="name">Name</option>
+				  <option value="raw">Raw</option>
+				  <option value="raw_series">Raw Series</option>
+			</select>
+		</div>
+		<div class="forms">
+			<select class="textArea" id="eventType">
+				  <option value="">Event Type</option>
+				  <option value="onChange">OnChange</option>
+				  <option value="onblur">Onblur</option>
+				  <option value="onload">onload</option>
+				  <option value="click">Click</option>
+				  <option value="onload_onChange">Onload and OnChange</option>
+				  <option value="reRender">Control Re-Render</option>
+				  <option value="dynamicIdentifier">Dynamic Page Identified</option>
+			</select>
+		</div>
+		<button id="saveMapping" class="saveButtonWidget">Save</button>
+	</div>
   </div>
-
+	
+  <!-- <div class="selectForm">
+  	<div class="divtitle">
+  		<h3 class="sectorTitle">Your Selector</h3>
+  	</div>
+	<input class="textArea" id="dumySelector" placeholder="Your Selector"></input>
+  </div> -->
+  <div class="forms">
+  	<button id="saveForm" class="saveButtonWidget">Save Form</button>	
+  </div>
+ </div>
 </div>

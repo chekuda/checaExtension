@@ -1,10 +1,18 @@
-.firstForm{
-	margin-top: 50px;
-	font-size: 20px;
+#editableWidget{
+	overflow-y:auto;
 }
-.firstForm label{
-	display: inline-block;
-    width: 120px;
+.forms{
+	   padding-bottom: 10px;
+	   width: 250px;
+       margin: 0 auto;
+}
+h3.sectorTitle{
+	display: block !important;
+	color: #B2D234 !important;
+	border: 0 !important;
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+	width: 100% !important;
 }
 
 .incon{
@@ -32,8 +40,36 @@
 	left: 5px;
 	width: 20px;
     height: 20px;
-	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/left.png");
+	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/leftWhite.png");
 	cursor: pointer !important;
+}
+
+.listNewFormMappings{
+	padding-bottom: 10px;
+}
+.listNewFormMappings .newObjectMapping
+{
+	font-weight: bold;
+	width: 200px;
+    display: inline-block;
+    position: relative;
+    color: #ffffff;
+    line-height: 20px;
+}
+.listNewFormMappings .removeNewObject
+{
+	vertical-align: middle;
+	position: absolute;
+	right: 0px;
+	width: 20px;
+    height: 20px;
+	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/remove.png");
+	cursor: pointer;
+}
+.newMappingsList{
+	max-height: 100px;
+	overflow: auto;
+	padding-bottom: 10px;
 }
 .rightMoveIcon{
 	position: absolute;
@@ -41,36 +77,68 @@
 	width: 20px;
     height: 20px;
     left: 20px;
-	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/right.png");
+	background-image: url("chrome-extension://ojdefephjmdebknhoojenbpemafoeoga/assets/rightWhite.png");
 	cursor: pointer !important;
 }
 
-#selectForm{
-	padding-top: 20px;
-	padding-bottom: 20px;
+.saveButtonWidget{
+	border: 0 !important;
+    background-color: #1abc9c !important;
+    background: #1abc9c !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    transition: all 0.5s ease 0s !important;
+    padding: 10px !important;
+    box-shadow: none;
+    border-color: none;
+    line-height: 14px;
+    min-width: 110px;
+}
+.saveButtonWidget:hover{
+    background-color: #45ddbf !important;
+}
+#saveForm{
+	margin-top: 10px !important;
+}
+.selectForm{
+	padding-bottom: 10px;
 	border-bottom: solid 1px #8b8888;
+	
 }
 
-#selectForm label{
-	display: inline-block;
-}
-#selectForm .forms{
-	   
-	   padding-bottom: 10px;
-}
-#selectForm .mapping{
-	padding-bottom: 10px;
-}
-#selectForm textarea{
-	    vertical-align: middle;
-	    height: 32px;
-	    font-size: 14px;
+
+.textArea{
+		color: #394049;
+	    max-height: 32px !important;
+	    font-size: 14px !important;
+	    width: 100% !important;
+	    border: 0  !important;
+	    display: block !important;
+	    background-color: #ffffff !important;
+	    background: #ffffff !important;
+	    margin: 0 auto !important;
+	    line-height: 10px !important;
+	    overflow: hidden !important;
+	    border-radius: 0 !important;
+	    padding: 6px 4px 6px 11px !important;
+	    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+		-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+		box-sizing: border-box; 
+		}
+select.textArea{
+	    -webkit-appearance: menulist !important;
 }
 
 #tagSelector{
 	border-bottom: solid 1px #8b8888;
     padding-top: 30px;
     padding-bottom: 15px;
+	font-size: 20px;
+}
+#tagSelector .titleTag{
+	display: inline-block;
+	color: #ffffff;
+	font-weight: bold;
 }
 
 .veCaptureWidget{
@@ -78,25 +146,23 @@
       width: 300px;
       left: 0;
       display : block ;
-      background-color : #cccccc ;
+      background-color : #394049;
       top :0;
-      opacity :0;
       text-align: center;
       transition: all 0.5s ease 0s;
-      z-index: 20000;
+      z-index: 999999;
+      opacity: 0.9;
 }
 .veCaptureWidget *{
-	font-size: 17px;
-	color: #000000;
-	cursor: default;
-	border:0;
-	border-color: none;
-	border-radius: 0;
-	padding: 0;
-	margin: 0;
+	font-size: 14px;
+	font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+	-webkit-appearance: normal !important;
+ 	appearance:field !important;
+
 }
 .veCaptureWidget .groupFrom{
 	padding: 10px;
+	display: inline-block;
 }
 
 .widgethideButton{
@@ -110,7 +176,66 @@
 	color: black;
 	padding: 5px;
 	transition: all 0.3s ease 0s;
+	opacity: 0.9;
 }
 .widgethideButton:hover{
 	background-color: #4ebc31;
+}
+/*#wholeUrl{
+		color: #394049;
+		height: 32px;
+	    font-size: 14px !important;
+	    width: 100% !important;
+	    border: 0  !important;
+	    display: block !important;
+	    background-color: #ffffff !important;
+	    background: #ffffff !important;
+	    margin: 0 auto !important;
+	    line-height: 10px !important;
+	    overflow: auto !important;
+	    border-radius: 0 !important;
+	    padding: 6px 4px 6px 11px !important;
+	    -webkit-box-sizing: border-box; 
+		-moz-box-sizing: border-box;    
+		box-sizing: border-box; 
+		transition: all 0.3s ease 0s;
+}
+#wholeUrl:hover{
+	height: 100px;
+}*/
+.tooltip {
+    position: relative;
+}
+
+.tooltip .toolTipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .toolTipText::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .toolTipText {
+    visibility: visible;
+    opacity: 1;
 }

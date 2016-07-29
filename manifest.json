@@ -7,8 +7,7 @@
 
   "browser_action": {
   "default_title": "VeCapture Atomatic Selector",
-   "default_icon": "assets/Cicon.png",
-   "default_popup": "popup.html"
+   "default_icon": "assets/Cicon.png"
   },
   "permissions": [
     "tabs",
@@ -32,7 +31,7 @@
     "assets/close.png",
     "assets/loading.gif",
     "assets/plus.png",
-    "assets/left.png",
-    "assets/right.png"
+    "assets/leftWhite.png",
+    "assets/rightWhite.png"
     ]
 }

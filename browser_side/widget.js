@@ -49,8 +49,27 @@ function removeItem(){
 
 }
 
-function saveFormMapping(){
+function checkObjectClicked(event){
 
+  var nameM = event.target.textContent;
+
+  for(var i=0;i<listNewFormMappings.length;i++)
+  {
+    if(listNewFormMappings[i].mappingName == event.target.textContent)
+    {
+      document.getElementById("mappingName").value = listNewFormMappings[i].mappingName;
+      document.getElementById("mappingSelector").value = listNewFormMappings[i].mappingSelector;
+      document.getElementById("mappingDataType").value =listNewFormMappings[i].mappingDataType;
+      document.getElementById("htmlType").value = listNewFormMappings[i].htmlType;
+      document.getElementById("htmlAttribute").value = listNewFormMappings[i].htmlAttribute;
+      document.getElementById("fieldType").value = listNewFormMappings[i].fieldType;
+      document.getElementById("eventType").value = listNewFormMappings[i].eventType;
+    }
+  }
+}
+
+function saveFormMapping(){
+var controlIfExist= "no";
 var newOne = {
       mappingName: document.getElementById("mappingName").value,
       mappingSelector: document.getElementById("mappingSelector").value,
@@ -63,26 +82,42 @@ var newOne = {
 
   if(newOne.mappingName!="" && newOne.mappingSelector!="" && newOne.mappingDataType!="" && newOne.htmlType!="" && newOne.htmlAttribute!="" && newOne.fieldType!="" && newOne.eventType!="")
   {
-    listNewFormMappings.push(newOne);
+    for(var i=0;i<listNewFormMappings.length;i++)
+    {
+      if(listNewFormMappings[i].mappingName == newOne.mappingName)
+      {
+        controlIfExist = i;
+      }
+    }
+    if(controlIfExist != "no")
+    {
 
-    var newDiv = document.createElement("div");
-    newDiv.className="listNewFormMappings";   
-    var newSpan = document.createElement("span");
-    newSpan.className="newObjectMapping";
-    var removeSpan = document.createElement("span");
-    removeSpan.className="removeNewObject";       
-    var newName = document.createTextNode(newOne.mappingName); 
-    newSpan.appendChild(newName);
-    newSpan.appendChild(removeSpan);   
-    newDiv.appendChild(newSpan);
-                      
+        listNewFormMappings[controlIfExist] = newOne;
+        console.log("FormMapping named>> "+newOne.mappingName+" replaced");
+    }
+    else
+    {
+      listNewFormMappings.push(newOne);
 
-    var list = document.querySelector("#formMappings .newMappingsList");    
-    list.insertBefore(newDiv, list.childNodes[0]);
-    list.childNodes[0].addEventListener("click",removeItem);
+      var newDiv = document.createElement("div");
+      newDiv.className="listNewFormMappings";   
+      var newSpan = document.createElement("span");
+      newSpan.className="newObjectMapping";
+      var removeSpan = document.createElement("span");
+      removeSpan.className="removeNewObject";       
+      var newName = document.createTextNode(newOne.mappingName); 
+      newSpan.appendChild(newName);
+      newSpan.appendChild(removeSpan);   
+      newDiv.appendChild(newSpan);
+                        
 
-    clearFields("mappingSaved");
-    
+      var list = document.querySelector("#formMappings .newMappingsList");    
+      list.insertBefore(newDiv, list.childNodes[0]);
+      document.querySelector(".removeNewObject").addEventListener("click",removeItem);
+      document.querySelector(".newObjectMapping").addEventListener("click",checkObjectClicked);
+
+    }
+          clearFields("mappingSaved");
 
   }
   else{
@@ -167,6 +202,7 @@ function saveForm(){
           alert("The client with JourneyId>> "+currentObject.journeyId+" is on your localStorage");
         }
       }
+      clearFields("formSaved");
       
   }
 }
@@ -405,6 +441,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       //Everytime I open the widget check the tag
       document.querySelector(".veCaptureWidget").style.display = "block";
     }
+
 
     document.addEventListener("click",stopAlloldEvents);
       // checkveGDM(nScripts);

@@ -60,6 +60,7 @@ h3.sectorTitle{
     position: relative;
     color: #ffffff;
     line-height: 20px;
+    cursor: pointer;
 }
 .listNewFormMappings .removeNewObject
 {

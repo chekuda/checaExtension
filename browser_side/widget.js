@@ -132,6 +132,7 @@ else
 
 function checkObjectClicked(event){
 
+  var control;
   var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
 
   var nameM = event.target.textContent;
@@ -154,6 +155,12 @@ function checkObjectClicked(event){
   }
   else
   {
+    //Alert to check if reality the client want to change the form
+   if (confirm("This action will remove all the current form configuration") == true) {
+      x = "yes";
+      } else {
+          return false;
+      }
     for(var j=0;j<currentForms.form.length;j++)
     {
       if(currentForms.form[j].formName == nameM)
@@ -171,6 +178,7 @@ function checkObjectClicked(event){
 
 function saveFormMapping(){
 var controlIfExist= "no";
+var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
 var newOne = {
       mappingName: document.getElementById("mappingName").value,
       mappingSelector: document.getElementById("mappingSelector").value,
@@ -190,6 +198,20 @@ var newOne = {
         controlIfExist = i;
       }
     }
+    //Flag for check if formmaping exist
+    for(var i=0;i<currentForms.form.length;i++)
+    {
+      for(var j=0;j<currentForms.form[i].listMappings.length;j++)
+      {
+        if(currentForms.form[i].listMappings[j].mappingName == newOne.mappingName)
+        {
+          alert("Form Mapping Name already exist in other Form");
+          return false;
+        }
+      }
+      
+    }
+
     if(controlIfExist != "no")
     {
 
@@ -373,7 +395,8 @@ function remarkTarget(event)
       return false;
     }
 
-  event.target.style.border = "solid 2px #feff04";
+  // event.target.style.borderColor = "solid 2px #feff04";
+  event.target.style.boxShadow ="-1px 0px 0px 8px #feff04";
 }
 /********************
   UnRemark the border
@@ -388,7 +411,8 @@ function unremarkTarget(event)
       return false;
     }
 
-  event.target.style.border = "none";
+  // event.target.style.border = "none";
+  event.target.style.boxShadow ="none";
 }
 /********************
   Get the selector
@@ -406,30 +430,108 @@ function getSelector(event){
     var nodeClass="";
     var parentNodeId="";
     var parentNodeName="";
+    var parentNodeClass="";
     var nodeId="";
     var getDeep="";
+    var parentParentNode ="";
 
-    if(event.toElement.className != "")
+    //Class List for Node Clicked
+    if(event.toElement.classList)
     {
-        nodeClass = event.toElement.className;
+      if(event.toElement.classList.length >0)
+      {
+        nodeClass = event.toElement.classList.value;
+        nodeClass = nodeClass.split(" ");
 
-        if(nodeClass.match(/{{.+}}/))//remove the moustache elements 
+        for(var i=0;i<nodeClass.length;i++)
         {
-          nodeClass =  nodeClass.replace(nodeClass.match(/{{.+}}/)[0],"").trim();
+          if(nodeClass[i].match(/{{.+}}/))//remove the moustache elements 
+          {
+            nodeClass.splice(i,1);
+          }
         }
-        nodeClass = nodeClass.replace(/  /g," ");
-        nodeClass = "."+nodeClass.replace(/ /g,".");
+        if (nodeClass.length == 0) 
+        {
+          nodeClass ="";
+        }
+        else
+        {
+          nodeClass = "."+nodeClass.join(".");
+        }
+      }
     }
+    //Class List for parent of parent Clicked
+    if(event.toElement.classList && event.target.parentNode.parentNode.classList)//if the element doesnt have class
+    {
+      if(event.toElement.classList.length == 0 && event.target.parentNode.parentNode.classList.length >0)
+      {
+        parentParentNode = event.target.parentNode.parentNode.classList.value;
+        parentParentNode = parentParentNode.split(" ");
+
+         for(var i=0;i<parentParentNode.length;i++)
+          {
+            if(parentParentNode[i].match(/{{.+}}/))//remove the moustache elements 
+            {
+              parentParentNode.splice(i,1);
+            }
+          }
+          if (parentParentNode.length == 0) 
+          {
+            parentParentNode ="";
+          }
+          else
+          {
+            parentParentNode = "."+parentParentNode.join(".");
+          }
+      }
+      
+    }
+    //Class List for parent  Clicked
+    if(event.target.parentNode.classList)
+    {
+      if(event.target.parentNode.classList.length >0)
+      {
+        parentNodeClass = event.target.parentNode.classList.value;
+        parentNodeClass = parentNodeClass.split(" ");
+
+       for(var i=0;i<parentNodeClass.length;i++)
+        {
+          if(parentNodeClass[i].match(/{{.+}}/))//remove the moustache elements 
+          {
+            parentNodeClass.splice(i,1);
+          }
+        }
+        if (parentNodeClass.length == 0) 
+        {
+            parentNodeClass ="";
+        }
+        else
+        {
+          parentNodeClass = "."+parentNodeClass.join(".");
+        }
+      }
+      
+    }
+    //Id for parent of parent Clicked
     if(event.toElement.parentNode.id != "")
     {
         parentNodeId = "#"+event.toElement.parentNode.id;
     }
+    //Id of node Clicked
     if(event.target.id != "")
     {
         nodeId = "#"+event.target.id;
     }
 
-    finalSelector = event.toElement.parentNode.nodeName.toLowerCase()+""+parentNodeId+" "+event.target.nodeName.toLowerCase()+""+nodeClass+""+nodeId;
+    if(parentParentNode != "")//Not add a spare space at the begining
+    {
+      finalSelector = parentParentNode+" "+event.toElement.parentNode.nodeName.toLowerCase()+""+parentNodeId+""+parentNodeClass+" "+event.target.nodeName.toLowerCase()+""+nodeClass+""+nodeId;
+    }
+    if(parentParentNode == "")
+    {
+      finalSelector = event.toElement.parentNode.nodeName.toLowerCase()+""+parentNodeId+""+parentNodeClass+" "+event.target.nodeName.toLowerCase()+""+nodeClass+""+nodeId;
+    }
+    
 
     getDeep = document.querySelectorAll(finalSelector);
     

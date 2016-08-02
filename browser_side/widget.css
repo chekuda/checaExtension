@@ -103,7 +103,7 @@ h3.sectorTitle{
 {
 	visibility: hidden;
 	height: 0px;
-	max-height: 60px;
+	max-height: 140px;
 	overflow-y: auto;
 	width: 100%;
 	transition: visibility 0.6s !important;
@@ -124,6 +124,7 @@ h3.sectorTitle{
 	max-height: 100px;
 	overflow: auto;
 	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .rightMoveIcon{

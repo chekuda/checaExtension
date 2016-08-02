@@ -12,7 +12,8 @@
 
 
 var listNewFormMappings=[];
-var veTag = "";
+var vetag = "";
+var veCapture = "";
 
 function shoMappingsFromLocalStorage()
 {
@@ -641,6 +642,7 @@ function checkveCapture()
       if(document.getElementById("veConnect"))
       {
           console.log("VECapture>>>>>> "+document.getElementById("veConnect").src);
+          veCapture = document.getElementById("veConnect").src;
           document.querySelector("#vecapture .iconOk").style.background = "url('https://s25.postimg.org/vbbn1j7wf/ok.png')";/*Loading the image from the extension URL*/
 
       }
@@ -659,6 +661,14 @@ function getWholeURL(){
   wholeURL = window.location.hostname + window.location.pathname;
   document.getElementById("wholeUrl").value = wholeURL.replace(/^www./g,"");
   // checkURLandForm(wholeURL);
+}
+function displaymenudisplayButton(){
+   if(window.localStorage.getItem("ve_widget"))
+    {
+      document.querySelector(".menuBottomWidget").style.display="inline-block";
+      document.querySelector(".menuBottomWidget").addEventListener("mousedown",openListForm);
+      loadListForm();
+    }
 }
 /********************
   Receive information from extension
@@ -682,12 +692,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           document.querySelector("span.rightMoveIcon").addEventListener("mousedown",moveRightWidget);
           document.querySelector("#saveMapping").addEventListener("mousedown",saveFormMapping);
           document.querySelector("#saveForm").addEventListener("mousedown",saveForm);
-          if(window.localStorage.getItem("ve_widget"))
-          {
-            document.querySelector(".menuBottomWidget").style.display="inline-block";
-            document.querySelector(".menuBottomWidget").addEventListener("mousedown",openListForm);
-            loadListForm();
-          }
+          displaymenudisplayButton();
           checkveTag();
           checkveCapture();
           calculateHeightofFormSection();
@@ -712,6 +717,14 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
     document.addEventListener("mouseout",unremarkTarget);
 
+    if(document.querySelector(".veCaptureWidget") && vetag == "")
+    {
+      checkveTag();
+    }
+    if(document.querySelector(".veCaptureWidget") && veCapture == "")
+    {
+      checkveCapture();
+    }
 
 
   }

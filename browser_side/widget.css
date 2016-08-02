@@ -1,3 +1,6 @@
+.testClass{
+	pointer-events: none;
+}
 #editableWidget{
 	overflow-y:auto;
 }

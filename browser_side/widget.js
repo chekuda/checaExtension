@@ -38,8 +38,8 @@ function shoMappingsFromLocalStorage()
 
       var list = document.querySelector("#formMappings .newMappingsList");    
       list.insertBefore(newDiv, list.childNodes[0]);
-      document.querySelector(".removeNewObject").addEventListener("click",removeItem);
-      document.querySelector(".newObjectMapping").addEventListener("click",checkObjectClicked);
+      document.querySelector(".removeNewObject").addEventListener("mousedown",removeItem);
+      document.querySelector(".newObjectMapping").addEventListener("mousedown",checkObjectClicked);
   }
 }
 
@@ -78,8 +78,8 @@ function loadListForm()
 
       var list = document.querySelector("#listForms");    
       list.insertBefore(newDiv, list.childNodes[0]);
-      document.querySelector(".removeNewObjectForm").addEventListener("click",removeItem);
-      document.querySelector(".newobjectForm").addEventListener("click",checkObjectClicked);
+      document.querySelector(".removeNewObjectForm").addEventListener("mousedown",removeItem);
+      document.querySelector(".newobjectForm").addEventListener("mousedown",checkObjectClicked);
   }
 
 }
@@ -136,7 +136,7 @@ function checkObjectClicked(event){
 
   var nameM = event.target.textContent;
 
-  if(event.target.parentNode.parentNode.className == "listNewFormMappings")
+  if(event.target.parentNode.parentNode.className == "newMappingsList")
   {
     for(var i=0;i<listNewFormMappings.length;i++)
     {
@@ -214,8 +214,8 @@ var newOne = {
 
       var list = document.querySelector("#formMappings .newMappingsList");    
       list.insertBefore(newDiv, list.childNodes[0]);
-      document.querySelector(".removeNewObject").addEventListener("click",removeItem);
-      document.querySelector(".newObjectMapping").addEventListener("click",checkObjectClicked);
+      document.querySelector(".removeNewObject").addEventListener("mousedown",removeItem);
+      document.querySelector(".newObjectMapping").addEventListener("mousedown",checkObjectClicked);
 
     }
           clearFields();
@@ -352,10 +352,10 @@ function moveRightWidget(){
 *******************/
 
 function stopFunctionalities(){
-  document.removeEventListener("click",getSelector);
+  document.removeEventListener("mousedown",getSelector);
   document.removeEventListener("mouseover",remarkTarget);
   document.removeEventListener("mouseout",remarkTarget);
-  document.removeEventListener("click",stopAlloldEvents);
+  document.removeEventListener("click",stopAlloldEvents,true);
 
   document.querySelector(".veCaptureWidget").style.display = "none";
 }
@@ -575,15 +575,15 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           $(res).appendTo("body");
           document.querySelector(".veCaptureWidget").style.height = window.innerHeight+"px";
           setTimeout(function(){ document.querySelector(".veCaptureWidget").style.display = "block"; }, 50);
-          document.querySelector(".iconClose").addEventListener("click",stopFunctionalities);
-          document.querySelector("span.leftMoveIcon").addEventListener("click",moveLeftWidget);
-          document.querySelector("span.rightMoveIcon").addEventListener("click",moveRightWidget);
-          document.querySelector("#saveMapping").addEventListener("click",saveFormMapping);
-          document.querySelector("#saveForm").addEventListener("click",saveForm);
+          document.querySelector(".iconClose").addEventListener("mousedown",stopFunctionalities);
+          document.querySelector("span.leftMoveIcon").addEventListener("mousedown",moveLeftWidget);
+          document.querySelector("span.rightMoveIcon").addEventListener("mousedown",moveRightWidget);
+          document.querySelector("#saveMapping").addEventListener("mousedown",saveFormMapping);
+          document.querySelector("#saveForm").addEventListener("mousedown",saveForm);
           if(window.localStorage.getItem("ve_widget"))
           {
             document.querySelector(".menuBottomWidget").style.display="inline-block";
-            document.querySelector(".menuBottomWidget").addEventListener("click",openListForm);
+            document.querySelector(".menuBottomWidget").addEventListener("mousedown",openListForm);
             loadListForm();
           }
           checkveTag();
@@ -602,9 +602,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     }
 
 
-    document.addEventListener("click",stopAlloldEvents);
+    document.addEventListener("click",stopAlloldEvents,true);
       // checkveGDM(nScripts);
-    document.addEventListener("click",getSelector);
+    document.addEventListener("mousedown",getSelector);
 
     document.addEventListener("mouseover",remarkTarget);
 

@@ -19,7 +19,7 @@
   <div id="editableWidget">
   <div class="selectForm">
   	<div class="divtitle">
-  		<h3 class="sectorTitle">Form configuration</h3>
+  		<h3 class="sectorTitle">Current Form</h3><span class="menuBottomWidget"></span>
   	</div>
   	<!-- <div class="forms">
   		<label>Form</label>
@@ -31,6 +31,8 @@
 		  <option value="Complete">Complete</option>
 		</select>
 	</div> -->
+	<div id="listForms" style="visibility: hidden;">
+	</div>
 	<div class="forms">
 	  	<input class="textArea" placeholder="Form Name" id="formName"/>
 	</div>
@@ -43,8 +45,12 @@
 		  	  <option value="complete_Cancel">Complete Cancel</option>
 		</select>
 	</div>
-	<div class="forms tooltip" >
+	<div class="forms msgTooltip" >
 	  	<input class="textArea" placeholder="URL" id="wholeUrl"/><span class="toolTipText">For multiple Urls, please split them by ","</span>
+	</div>
+	<div class="forms search">
+	  	<input class="parameterArea" placeholder="parameter" id="parameter"/>
+	  	<input class="parameterArea" placeholder="value" id="pvalue"/>
 	</div>
   </div>
   <div class="selectForm">

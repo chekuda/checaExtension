@@ -1,6 +1,11 @@
 .testClass{
 	pointer-events: none;
 }
+.divtitle{
+	width: 250px;
+    margin: auto;
+    position: relative;
+}
 #editableWidget{
 	overflow-y:auto;
 }
@@ -56,6 +61,9 @@ h3.sectorTitle{
 
 .listNewFormMappings{
 	padding-bottom: 10px;
+	width: 250px;
+    margin: 0 auto;
+    position: relative;
 }
 .listNewFormMappings .newObjectMapping
 {
@@ -77,6 +85,12 @@ h3.sectorTitle{
 	background-image: url("https://s25.postimg.org/6xdctwatb/remove.png");
 	cursor: pointer;
 }
+.listoldForm{
+	width: 250px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 7px;
+}
 
 .listoldForm .newobjectForm
 {
@@ -87,7 +101,6 @@ h3.sectorTitle{
     color: #ffffff;
     line-height: 20px;
     cursor: pointer;
-	padding: 5px;
 }
 .listoldForm .removeNewObjectForm
 {
@@ -103,8 +116,6 @@ h3.sectorTitle{
 {
 	visibility: hidden;
 	height: 0px;
-	max-height: 140px;
-	overflow-y: auto;
 	width: 100%;
 	transition: visibility 0.6s !important;
 	transition: height 0.2s !important;
@@ -116,15 +127,13 @@ h3.sectorTitle{
 	display: none;
 	background: url("https://s25.postimg.org/g1gd831rz/menu.png");
 	position: absolute;
-    top: 55px;
-    right: 29px;
+    top: 0;
+    right: 0;
     cursor: pointer;
 }
 .newMappingsList{
-	max-height: 100px;
+	max-height: 400px;
 	overflow: auto;
-	padding-bottom: 10px;
-	margin-bottom: 10px;
 }
 
 .rightMoveIcon{

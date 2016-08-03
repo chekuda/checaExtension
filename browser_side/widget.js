@@ -32,9 +32,9 @@ function shoMappingsFromLocalStorage()
       var removeSpan = document.createElement("span");
       removeSpan.className="removeNewObject";       
       var newName = document.createTextNode(listNewFormMappings[i].mappingName); 
-      newSpan.appendChild(newName);
-      newSpan.appendChild(removeSpan);   
+      newSpan.appendChild(newName);  
       newDiv.appendChild(newSpan);
+      newDiv.appendChild(removeSpan);
                         
 
       var list = document.querySelector("#formMappings .newMappingsList");    
@@ -44,44 +44,64 @@ function shoMappingsFromLocalStorage()
   }
 }
 
-function openListForm()
+function openListForm(data)
 {
   var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
   var totalH = 30 * currentForms.form.length;
-  if(document.getElementById("listForms").style.visibility == "hidden")
+  if(data == "saved")
   {
     document.getElementById("listForms").style.visibility = "visible";
     document.getElementById("listForms").style.height = totalH+"px";
   }
   else
   {
-    document.getElementById("listForms").style.visibility = "hidden";
-    document.getElementById("listForms").style.height = "0px";
-    
+    if(document.getElementById("listForms").style.visibility == "hidden")
+    {
+      document.getElementById("listForms").style.visibility = "visible";
+      document.getElementById("listForms").style.height = totalH+"px";
+    }
+    else
+    {
+      document.getElementById("listForms").style.visibility = "hidden";
+      document.getElementById("listForms").style.height = "0px";
+      
+    }
   }
+  
 }
 
-function loadListForm()
+function loadListForm(flag)
 {
   var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
-  for(var i = 0;i<currentForms.form.length; i++)
+  if(flag == "saved")//THis is for show the form when saved in the list
   {
-      var newDiv = document.createElement("div");
-      newDiv.className="listoldForm";   
-      var newSpan = document.createElement("span");
-      newSpan.className="newobjectForm";
-      var removeSpan = document.createElement("span");
-      removeSpan.className="removeNewObjectForm";   
-      var newName = document.createTextNode(currentForms.form[i].formName); 
-      newSpan.appendChild(newName);
-      newSpan.appendChild(removeSpan);  
-      newDiv.appendChild(newSpan);
-
-      var list = document.querySelector("#listForms");    
-      list.insertBefore(newDiv, list.childNodes[0]);
-      document.querySelector(".removeNewObjectForm").addEventListener("mousedown",removeItem);
-      document.querySelector(".newobjectForm").addEventListener("mousedown",checkObjectClicked);
+    currentForms.form = [currentForms.form[currentForms.form.length-1]];
+    document.querySelector(".veCaptureWidget #listForms").style.height = document.querySelector(".veCaptureWidget #listForms").clientHeight + 30 +"px";
   }
+ 
+ if(currentForms)
+ {
+    for(var i = 0;i<currentForms.form.length; i++)
+    {
+        var newDiv = document.createElement("div");
+        newDiv.className="listoldForm";   
+        var newSpan = document.createElement("span");
+        newSpan.className="newobjectForm";
+        var removeSpan = document.createElement("span");
+        removeSpan.className="removeNewObjectForm";   
+        var newName = document.createTextNode(currentForms.form[i].formName); 
+        newSpan.appendChild(newName);
+        newDiv.appendChild(removeSpan);  
+        newDiv.appendChild(newSpan);
+
+        var list = document.querySelector("#listForms");    
+        list.insertBefore(newDiv, list.childNodes[0]);
+        document.querySelector(".removeNewObjectForm").addEventListener("mousedown",removeItem);
+        document.querySelector(".newobjectForm").addEventListener("mousedown",checkObjectClicked);
+
+    }
+ } 
+  
 
 }
 
@@ -96,38 +116,6 @@ function clearFields(){
     document.getElementById("fieldType").value = "";
     document.getElementById("eventType").value = "";
 
-
-}
-
-function removeItem(){
-  var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
-  var nodeToRemove="";
-  console.log(event.target.parentNode.parentNode);
-  nodeToRemove =  event.target.parentNode.textContent;
-
-if(event.target.parentNode.parentNode.className == "listNewFormMappings")
-{
-  for(var i=0;i<listNewFormMappings.length;i++)
-  {
-    if(listNewFormMappings[i].mappingName == nodeToRemove)
-    {
-      listNewFormMappings.splice(i,1);
-    }
-  }
-}
-else
-{
-  for(var j=0;j<currentForms.form.length;j++)
-  {
-    if(currentForms.form[j].formName == nodeToRemove)
-    {
-      currentForms.form.splice(j,1);
-    }
-  }
-  window.localStorage.setItem("ve_widget",JSON.stringify(currentForms));
-}
-  
-  event.target.parentNode.parentNode.remove();
 
 }
 
@@ -157,25 +145,75 @@ function checkObjectClicked(event){
   else
   {
     //Alert to check if reality the client want to change the form
-   if (confirm("This action will remove all the current form configuration") == true) {
+   if (confirm("This action will remove all the current view form configuration") == true) {
       x = "yes";
       } else {
           return false;
       }
-    for(var j=0;j<currentForms.form.length;j++)
+    if(currentForms)
     {
-      if(currentForms.form[j].formName == nameM)
+      for(var j=0;j<currentForms.form.length;j++)
       {
-        document.getElementById("formName").value = currentForms.form[j].formName;
-        document.getElementById("formType").value = currentForms.form[j].formType;
-        document.getElementById("wholeUrl").value = currentForms.form[j].formURL;
-        listNewFormMappings = currentForms.form[j].listMappings;
-        shoMappingsFromLocalStorage();
+        if(currentForms.form[j].formName == nameM)
+        {
+          document.getElementById("formName").value = currentForms.form[j].formName;
+          document.getElementById("formType").value = currentForms.form[j].formType;
+          document.getElementById("wholeUrl").value = currentForms.form[j].formURL;
+          listNewFormMappings = currentForms.form[j].listMappings;
+          shoMappingsFromLocalStorage();
+        }
       }
     }
+    
   }
   
 }
+
+function removeItem(){
+  var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
+  var nodeToRemove="";
+  console.log(event.target.parentNode.parentNode);
+  nodeToRemove =  event.target.parentNode.textContent;
+
+if(event.target.parentNode.className == "listNewFormMappings")
+{
+  for(var i=0;i<listNewFormMappings.length;i++)
+  {
+    if(listNewFormMappings[i].mappingName == nodeToRemove)
+    {
+      listNewFormMappings.splice(i,1);
+    }
+  }
+}
+else
+{
+  //Alert to check if reality the client want to remove
+ if (confirm("This action will remove the form") == true) {
+    x = "yes";
+    } else {
+        return false;
+    }
+  if(currentForms)
+  {
+     for(var j=0;j<currentForms.form.length;j++)
+    {
+      if(currentForms.form[j].formName == nodeToRemove)
+      {
+        currentForms.form.splice(j,1);
+      }
+    }
+  }
+ 
+  window.localStorage.setItem("ve_widget",JSON.stringify(currentForms));
+  document.querySelector(".veCaptureWidget #listForms").style.height = document.querySelector(".veCaptureWidget #listForms").clientHeight - 30 +"px";
+}
+  
+  event.target.parentNode.remove();
+
+
+}
+
+
 
 function saveFormMapping(){
 var controlIfExist= "no";
@@ -199,19 +237,23 @@ var newOne = {
         controlIfExist = i;
       }
     }
-    //Flag for check if formmaping exist
-    for(var i=0;i<currentForms.form.length;i++)
+    if(currentForms)
     {
-      for(var j=0;j<currentForms.form[i].listMappings.length;j++)
+       //Flag for check if formmaping exist
+      for(var i=0;i<currentForms.form.length;i++)
       {
-        if(currentForms.form[i].listMappings[j].mappingName == newOne.mappingName)
+        for(var j=0;j<currentForms.form[i].listMappings.length;j++)
         {
-          alert("Form Mapping Name already exist in other Form");
-          return false;
+          if(currentForms.form[i].listMappings[j].mappingName == newOne.mappingName)
+          {
+            alert("Form Mapping Name already exist in other Form");
+            return false;
+          }
         }
+        
       }
-      
     }
+   
 
     if(controlIfExist != "no")
     {
@@ -230,9 +272,9 @@ var newOne = {
       var removeSpan = document.createElement("span");
       removeSpan.className="removeNewObject";       
       var newName = document.createTextNode(newOne.mappingName); 
-      newSpan.appendChild(newName);
-      newSpan.appendChild(removeSpan);   
+      newSpan.appendChild(newName);  
       newDiv.appendChild(newSpan);
+      newDiv.appendChild(removeSpan);
                         
 
       var list = document.querySelector("#formMappings .newMappingsList");    
@@ -298,38 +340,67 @@ function saveForm(){
       if(!window.localStorage.getItem("ve_widget"))
       {
         window.localStorage.setItem("ve_widget",JSON.stringify(ve_client));
+        displaymenudisplayButton();
+        calculateHeightofFormSection();
+        openListForm("saved");
       }
       else
       {
-        var currentObject = JSON.parse(window.localStorage.getItem("ve_widget"));
+        var currentForms = JSON.parse(window.localStorage.getItem("ve_widget"));
         
-        if(ve_client.journeyId == currentObject.journeyId)
+        if(ve_client.journeyId == currentForms.journeyId)
         {
-          for(var i=0;i<currentObject.form.length;i++)
-          {
-            if(currentObject.form[i].formName == ve_client.form[0].formName)
+            for(var i=0;i<currentForms.form.length;i++)
             {
-              controlIfExist = i;
+              if(currentForms.form[i].formName == ve_client.form[0].formName)
+              {
+                controlIfExist = i;
+              }
             }
-          }
-          if(controlIfExist != "no")
-          {
-            currentObject.form[controlIfExist] = ve_client.form[0];
-            window.localStorage.setItem("ve_widget",JSON.stringify(currentObject));
-            alert("Form named>> "+ve_client.form[0].formName+" replaced");
+            if(controlIfExist != "no")
+            {
+              currentForms.form[controlIfExist] = ve_client.form[0];
+              window.localStorage.setItem("ve_widget",JSON.stringify(currentForms));
+              alert("Form named>> "+ve_client.form[0].formName+" replaced");
 
-          }
-          else
-          {
-            currentObject.form.push(ve_client.form[0]);
-            window.localStorage.setItem("ve_widget",JSON.stringify(currentObject));
-            alert("Form named>> "+ve_client.form[0].formName+" added");
-          }
+            }
+            else
+            {
+              //check if formmmaping is in other form
+                //Flag for check if formmaping exist
+              for(var i=0;i<currentForms.form.length;i++)
+              {
+                for(var j=0;j<currentForms.form[i].listMappings.length;j++)
+                {
+                  for(var m=0;m<document.querySelectorAll(".newObjectMapping").length;m++)
+                  {
+                     if(currentForms.form[i].listMappings[j].mappingName == document.querySelectorAll(".newObjectMapping")[m].textContent)
+                      {
+                        if(currentForms.form[i].formName != document.querySelector("#formName").value)
+                        {
+                          alert("FormMapping "+currentForms.form[i].listMappings[j].mappingName+" already exist on Form "+currentForms.form[i].formName);
+                          return false;
+                        }
+                        
+                      }
+                  }
+                 
+                }
+                
+              }
+              currentForms.form.push(ve_client.form[0]);
+              window.localStorage.setItem("ve_widget",JSON.stringify(currentForms));
+              loadListForm("saved");
+              displaymenudisplayButton("saved");
+              calculateHeightofFormSection();
+              openListForm("saved");
+              alert("Form named>> "+ve_client.form[0].formName+" added"); 
+            }          
           
         }
         else
         {
-          alert("The client with JourneyId>> "+currentObject.journeyId+" is on your localStorage");
+          alert("The client with JourneyId>> "+currentForms.journeyId+" is on your localStorage");
         }
       }
       clearFields();
@@ -341,6 +412,7 @@ function stopAlloldEvents(event)
 {
   event.stopPropagation();
   event.preventDefault();
+  avoidFunctionalitiesFromWidget();
 }
 
 /********************
@@ -383,6 +455,13 @@ function stopFunctionalities(){
   document.querySelector(".veCaptureWidget").style.display = "none";
 }
 
+function avoidFunctionalitiesFromWidget(){
+  document.querySelector(".veCaptureWidget *").removeEventListener("mousedown",getSelector);
+  document.querySelector(".veCaptureWidget *").removeEventListener("mouseover",remarkTarget);
+  document.querySelector(".veCaptureWidget *").removeEventListener("mouseout",remarkTarget);
+  document.querySelector(".veCaptureWidget *").removeEventListener("click",stopAlloldEvents,true);
+}
+
 /********************
   Bold the border
 *******************/
@@ -397,7 +476,7 @@ function remarkTarget(event)
     }
 
   // event.target.style.borderColor = "solid 2px #feff04";
-  event.target.style.boxShadow ="-1px 0px 0px 8px #feff04";
+  event.target.style.boxShadow ="0px -2px 0px 8px #feff04";
 }
 /********************
   UnRemark the border
@@ -421,8 +500,7 @@ function unremarkTarget(event)
 function getSelector(event){
 
     var procced = checkifElementFromWidget();
-
-    if(procced == 1)
+    if(procced == 1 || event.target.className == "removeNewObjectForm" || event.target.className == "removeNewObject")
     {
       return false;
     }
@@ -446,7 +524,7 @@ function getSelector(event){
 
         for(var i=0;i<nodeClass.length;i++)
         {
-          if(nodeClass[i].match(/{{.+}}/))//remove the moustache elements 
+          if(nodeClass[i].length == 0 || nodeClass[i].match(/[^A-Za-z0-9-_ ]/))//remove the moustache elements 
           {
             nodeClass.splice(i,1);
           }
@@ -471,7 +549,7 @@ function getSelector(event){
 
          for(var i=0;i<parentParentNode.length;i++)
           {
-            if(parentParentNode[i].match(/{{.+}}/))//remove the moustache elements 
+            if(parentParentNode[i].length == 0 || parentParentNode[i].match(/[^A-Za-z0-9-_ ]/))//remove the moustache elements 
             {
               parentParentNode.splice(i,1);
             }
@@ -497,7 +575,7 @@ function getSelector(event){
 
        for(var i=0;i<parentNodeClass.length;i++)
         {
-          if(parentNodeClass[i].match(/{{.+}}/))//remove the moustache elements 
+          if(parentNodeClass[i].length == 0 || parentNodeClass[i].match(/[^A-Za-z0-9-_ ]/))//remove the moustache elements 
           {
             parentNodeClass.splice(i,1);
           }
@@ -516,12 +594,19 @@ function getSelector(event){
     //Id for parent of parent Clicked
     if(event.toElement.parentNode.id != "")
     {
+      if(!event.toElement.parentNode.id.match(/[^A-Za-z0-9-_ ]/))
+      {
         parentNodeId = "#"+event.toElement.parentNode.id;
+      }
+        
     }
     //Id of node Clicked
     if(event.target.id != "")
     {
+      if(!event.target.id.match(/[^A-Za-z0-9-_ ]/))
+      {
         nodeId = "#"+event.target.id;
+      }
     }
 
     if(parentParentNode != "")//Not add a spare space at the begining
@@ -662,12 +747,15 @@ function getWholeURL(){
   document.getElementById("wholeUrl").value = wholeURL.replace(/^www./g,"");
   // checkURLandForm(wholeURL);
 }
-function displaymenudisplayButton(){
+function displaymenudisplayButton(data){
    if(window.localStorage.getItem("ve_widget"))
     {
       document.querySelector(".menuBottomWidget").style.display="inline-block";
       document.querySelector(".menuBottomWidget").addEventListener("mousedown",openListForm);
-      loadListForm();
+      if(data != "saved")//dont load twice the 
+      {
+        loadListForm();
+      }
     }
 }
 /********************

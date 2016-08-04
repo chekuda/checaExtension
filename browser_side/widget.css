@@ -2,17 +2,17 @@
 	pointer-events: none;
 }
 .divtitle{
-	width: 250px;
-    margin: auto;
+	width: 250px !important;
+    margin: auto !important;
     position: relative;
 }
 #editableWidget{
 	overflow-y:auto;
 }
 .forms{
-	   padding-bottom: 10px;
-	   width: 250px;
-       margin: 0 auto;
+	   padding-bottom: 10px !important;
+	   width: 250px !important;
+       margin: 0 auto !important;
 }
 h3.sectorTitle{
 	font-weight: bold;
@@ -60,9 +60,9 @@ h3.sectorTitle{
 }
 
 .listNewFormMappings{
-	padding-bottom: 10px;
-	width: 250px;
-    margin: 0 auto;
+	padding-bottom: 10px !important;
+	width: 250px !important;
+    margin: 0 auto !important;
     position: relative;
 }
 .listNewFormMappings .newObjectMapping
@@ -86,10 +86,10 @@ h3.sectorTitle{
 	cursor: pointer;
 }
 .listoldForm{
-	width: 250px;
-    margin: 0 auto;
+	width: 250px !important;
+    margin: 0 auto !important;
     position: relative;
-    padding-bottom: 7px;
+    padding-bottom: 7px !important;
 }
 
 .listoldForm .newobjectForm
@@ -166,7 +166,7 @@ h3.sectorTitle{
 	margin-top: 10px !important;
 }
 .selectForm{
-	padding-bottom: 10px;
+	padding-bottom: 10px !important;
 	border-bottom: solid 1px #8b8888;
 	
 }

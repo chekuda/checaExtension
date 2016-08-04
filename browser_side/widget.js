@@ -332,7 +332,7 @@ function saveForm(){
       ve_client.form[0].formURL = document.getElementById("wholeUrl").value;
       ve_client.form[0].parameters[0].parameter = document.getElementById("parameter").value;
       ve_client.form[0].parameters[0].pvalue = document.getElementById("pvalue").value;
-      ve_client.journeyId = vetag.match(/\b[A-Z0-9/]{2,}\b/)[0];
+      ve_client.journeyId = vetag.match(/\b[A-Z0-9].+\/\b/)[0];
       ve_client.journeyId = ve_client.journeyId.replace(/^\//,"");//remove the first /
       ve_client.journeyId = ve_client.journeyId.replace(/\/$/,"");//remove the last /
       ve_client.journeyId = ve_client.journeyId.replace(/\//g,"-");//Replace / for -
